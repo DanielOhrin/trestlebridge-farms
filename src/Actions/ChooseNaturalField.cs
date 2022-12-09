@@ -24,7 +24,7 @@ namespace Trestlebridge.Actions
 
                 for (int i = 0; i < farm.NaturalFields.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Natural Field ({10 - ((60 - farm.NaturalFields[i].SeedAmount) / 6)} rows)");
+                    Console.WriteLine($"{i + 1}. Natural Field ({farm.NaturalFields[i].SeedAmount / 6} rows)");
                 }
 
                 Console.WriteLine();

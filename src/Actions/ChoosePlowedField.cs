@@ -23,7 +23,7 @@ namespace Trestlebridge.Actions
 
                 for (int i = 0; i < farm.PlowedFields.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Plowed Field ({13 - ((65 - farm.PlowedFields[i].SeedAmount) / 5)} rows)");
+                    Console.WriteLine($"{i + 1}. Plowed Field ({farm.PlowedFields[i].SeedAmount / 5} rows)");
                 }
 
                 Console.WriteLine();
