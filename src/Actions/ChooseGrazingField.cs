@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions
 {
@@ -21,13 +22,14 @@ namespace Trestlebridge.Actions
                 {
                     Console.WriteLine(error);
                     Console.WriteLine();
-                    Console.WriteLine();
                 }
 
-                for (int i = 0; i < farm.PlowedFields.Count; i++)
+                List<GrazingField> fields = farm.GrazingFields.Where(x => x.AnimalAmount < x.Capacity).ToList();
+
+                for (int i = 0; i < fields.Count; i++)
                 {
                     Dictionary<string, int> animalCount = new Dictionary<string, int>();
-                    foreach (IGrazing a in farm.PlowedFields)
+                    foreach (IGrazing a in fields[i].Animals)
                     {
                         if (!animalCount.ContainsKey(a.GetType().Name))
                         {
@@ -38,7 +40,9 @@ namespace Trestlebridge.Actions
                             animalCount[a.GetType().Name]++;
                         }
                     }
-                    Console.WriteLine($"{i + 1}. Plowed Field ({String.Join(", ", animalCount.Select(x => x.Value + x.Key).ToList())})");
+
+                    string groupString = animalCount.Count > 0 ? String.Join(", ", animalCount.Select(x => x.Value + " " + x.Key).ToList()) : "0 animals";
+                    Console.WriteLine($"{i + 1}. Grazing Field ({groupString})");
                 }
 
                 Console.WriteLine();
@@ -51,21 +55,8 @@ namespace Trestlebridge.Actions
 
                 try
                 {
-                    if (farm.GrazingFields[choice - 1].AnimalAmount < farm.GrazingFields[choice - 1].Capacity)
-                    {
-                        farm.GrazingFields[choice - 1].AddResource(animal);
-                        break;
-                    }
-                    else
-                    {
-                        throw new OverflowException();
-                    }
-                }
-                catch (OverflowException)
-                {
-                    error = @"**** That facililty is not large enough ****
-**** Please choose another one ****";
-                    continue;
+                    farm.GrazingFields[choice - 1].AddResource(animal);
+                    break;
                 }
                 catch (ArgumentOutOfRangeException)
                 {

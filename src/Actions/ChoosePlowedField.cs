@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions
 {
@@ -23,11 +24,13 @@ namespace Trestlebridge.Actions
                     Console.WriteLine();
                 }
 
+                List<PlowedField> fields = farm.PlowedFields.Where(x => x.SeedAmount < x.Capacity).ToList();
 
-                for (int i = 0; i < farm.PlowedFields.Count; i++)
+                for (int i = 0; i < fields.Count; i++)
                 {
                     Dictionary<string, int> seedCount = new Dictionary<string, int>();
-                    foreach (ISeedProducing s in farm.PlowedFields)
+
+                    foreach (ISeedProducing s in fields[i].Seeds)
                     {
                         if (!seedCount.ContainsKey(s.GetType().Name))
                         {
@@ -38,7 +41,9 @@ namespace Trestlebridge.Actions
                             seedCount[s.GetType().Name]++;
                         }
                     }
-                    Console.WriteLine($"{i + 1}. Plowed Field ({String.Join(", ", seedCount.Select(x => x.Value + x.Key).ToList())})");
+
+                    string groupString = seedCount.Count > 0 ? String.Join(", ", seedCount.Select(x => x.Value + " " + x.Key).ToList()) : "0 seeds";
+                    Console.WriteLine($"{i + 1}. Plowed Field ({groupString})");
                 }
 
                 Console.WriteLine();
@@ -51,24 +56,11 @@ namespace Trestlebridge.Actions
 
                 try
                 {
-                    if (farm.PlowedFields[choice - 1].SeedAmount < farm.PlowedFields[choice - 1].Capacity)
+                    for (short i = 0; i < 5; i++)
                     {
-                        for (short i = 0; i < 5; i++)
-                        {
-                            farm.PlowedFields[choice - 1].AddResource(seed);
-                        }
-                        break;
+                        fields[choice - 1].AddResource(seed);
                     }
-                    else
-                    {
-                        throw new OverflowException();
-                    }
-                }
-                catch (OverflowException)
-                {
-                    error = @"**** That facililty is not large enough ****
-**** Please choose another one ****";
-                    continue;
+                    break;
                 }
                 catch (ArgumentOutOfRangeException)
                 {

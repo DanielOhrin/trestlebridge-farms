@@ -20,6 +20,14 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
+        public List<ISeedProducing> Seeds
+        {
+            get
+            {
+                return _seeds;
+            }
+        }
+
         public double SeedAmount
         {
             get

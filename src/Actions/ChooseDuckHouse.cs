@@ -1,7 +1,10 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Animals;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions
 {
@@ -20,12 +23,13 @@ namespace Trestlebridge.Actions
                 {
                     Console.WriteLine(error);
                     Console.WriteLine();
-                    Console.WriteLine();
                 }
 
-                for (int i = 0; i < farm.DuckHouses.Count; i++)
+                List<DuckHouse> houses = farm.DuckHouses.Where(x => x.DuckAmount < x.Capacity).ToList();
+
+                for (int i = 0; i < houses.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Duck House ({farm.DuckHouses[i].DuckAmount} ducks)");
+                    Console.WriteLine($"{i + 1}. Duck House ({houses[i].DuckAmount} ducks)");
                 }
 
                 Console.WriteLine();
@@ -38,21 +42,8 @@ namespace Trestlebridge.Actions
 
                 try
                 {
-                    if (farm.DuckHouses[choice - 1].DuckAmount < farm.DuckHouses[choice - 1].Capacity)
-                    {
-                        farm.DuckHouses[choice - 1].AddResource(duck);
-                        break;
-                    }
-                    else
-                    {
-                        throw new OverflowException();
-                    }
-                }
-                catch (OverflowException)
-                {
-                    error = @"**** That facililty is not large enough ****
-**** Please choose another one ****";
-                    continue;
+                    houses[choice - 1].AddResource(duck);
+                    break;
                 }
                 catch (ArgumentOutOfRangeException)
                 {
