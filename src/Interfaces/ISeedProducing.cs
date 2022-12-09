@@ -1,7 +1,9 @@
+using Trestlebridge.Models.Harvesters;
+
 namespace Trestlebridge.Interfaces
 {
     public interface ISeedProducing
     {
-        double Harvest ();
+        double Process(SeedHarvester equipment);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Harvesters;
 
 namespace Trestlebridge.Models.Plants
 {
@@ -7,7 +8,7 @@ namespace Trestlebridge.Models.Plants
     {
         private double _compostProduced = 21.6;
         public string Type { get; } = "Wildflower";
-        public double Scoop()
+        public double Process(Composter equipment)
         {
             return _compostProduced;
         }

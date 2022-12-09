@@ -1,7 +1,9 @@
+using Trestlebridge.Models.Harvesters;
+
 namespace Trestlebridge.Interfaces
 {
     public interface ICompostProducing
     {
-        double Scoop();
+        double Process(Composter equipment);
     }
 }

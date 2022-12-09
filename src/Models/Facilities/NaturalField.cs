@@ -9,6 +9,9 @@ namespace Trestlebridge.Models.Facilities
     {
         private int _capacity = 60;
         private Guid _id = Guid.NewGuid();
+        public int rows { get; } = 10;
+        public int seedsPerRow { get; } = 6;
+
 
         private List<ICompostProducing> _seeds = new List<ICompostProducing>();
 

@@ -29,7 +29,7 @@ namespace Trestlebridge.Actions
                 for (int i = 0; i < fields.Count; i++)
                 {
                     Dictionary<string, int> seedCount = new Dictionary<string, int>();
-                    foreach (ISeedProducing s in fields[i].Seeds)
+                    foreach (ICompostProducing s in fields[i].Seeds)
                     {
                         if (!seedCount.ContainsKey(s.GetType().Name))
                         {

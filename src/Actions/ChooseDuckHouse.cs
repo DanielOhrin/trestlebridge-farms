@@ -35,7 +35,7 @@ namespace Trestlebridge.Actions
                 Console.WriteLine();
 
                 // How can I output the type of seed chosen here?
-                Console.WriteLine($"Place the {duck.GetType().Name} where?");
+                Console.WriteLine($"Place the {duck.Type} where?");
 
                 Console.Write("> ");
                 int choice = Int32.Parse(Console.ReadLine());

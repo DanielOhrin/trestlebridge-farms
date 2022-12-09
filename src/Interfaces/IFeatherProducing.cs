@@ -1,7 +1,9 @@
+using Trestlebridge.Models.Harvesters;
+
 namespace Trestlebridge.Interfaces
 {
     public interface IFeatherProducing
     {
-        double Pluck();
+        double Process(FeatherHarvester equipment);
     }
 }

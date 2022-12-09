@@ -1,7 +1,9 @@
+using Trestlebridge.Models.Harvesters;
+
 namespace Trestlebridge.Interfaces
 {
     public interface IMeatProducing
     {
-        double Butcher ();
+        double Process(MeatProcessor equipment);
     }
 }
