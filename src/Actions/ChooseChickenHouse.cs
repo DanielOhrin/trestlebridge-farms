@@ -1,14 +1,13 @@
 using System;
-using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions
 {
-    public class ChooseGrazingField
+    public class ChooseChickenHouse
     {
-        public static void CollectInput(Farm farm, IGrazing animal)
+        public static void CollectInput(Farm farm, Chicken chicken)
         {
             string error = ""; // Updated depending on fail case
 
@@ -24,24 +23,24 @@ namespace Trestlebridge.Actions
                     Console.WriteLine();
                 }
 
-                for (int i = 0; i < farm.GrazingFields.Count; i++)
+                for (int i = 0; i < farm.ChickenHouses.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Grazing Field ({farm.GrazingFields[i].AnimalAmount} animals)");
+                    Console.WriteLine($"{i + 1}. Chicken House ({farm.ChickenHouses[i].ChickenAmount} chickens)");
                 }
 
                 Console.WriteLine();
 
-                // How can I output the type of animal chosen here?
-                Console.WriteLine($"Place the {animal.GetType().Name} where?");
+                // How can I output the type of seed chosen here?
+                Console.WriteLine($"Place the {chicken.GetType().Name} where?");
 
                 Console.Write("> ");
                 int choice = Int32.Parse(Console.ReadLine());
 
                 try
                 {
-                    if (farm.GrazingFields[choice - 1].AnimalAmount < farm.GrazingFields[choice - 1].Capacity)
+                    if (farm.ChickenHouses[choice - 1].ChickenAmount < farm.ChickenHouses[choice - 1].Capacity)
                     {
-                        farm.GrazingFields[choice - 1].AddResource(animal);
+                        farm.ChickenHouses[choice - 1].AddResource(chicken);
                         break;
                     }
                     else
@@ -66,7 +65,7 @@ namespace Trestlebridge.Actions
                 Couldn't get this to work. Can you?
                 Stretch goal. Only if the app is fully functional.
              */
-            // farm.PurchaseResource<GrazingField>(grazingField, choice);
+            // farm.PurchaseResource<Chicken>(chicken, choice);
 
         }
     }

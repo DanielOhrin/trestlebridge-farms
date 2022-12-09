@@ -5,12 +5,12 @@ using Trestlebridge.Interfaces;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class GrazingField : IFacility<IGrazing>
+    public class PlowedField : IFacility<ISeedProducing>
     {
-        private int _capacity = 20;
+        private int _capacity = 65;
         private Guid _id = Guid.NewGuid();
 
-        private List<IGrazing> _animals = new List<IGrazing>();
+        private List<ISeedProducing> _seeds = new List<ISeedProducing>();
 
         public double Capacity
         {
@@ -20,30 +20,30 @@ namespace Trestlebridge.Models.Facilities
             }
         }
 
-        public double AnimalAmount
+        public double SeedAmount
         {
             get
             {
-                return _animals.Count;
+                return _seeds.Count;
             }
         }
 
-        public void AddResource(IGrazing animal)
+        public void AddResource(ISeedProducing seed)
         {
-            _animals.Add(animal);
+            _seeds.Add(seed);
         }
 
-        public void AddResource(List<IGrazing> animals)
+        public void AddResource(List<ISeedProducing> seeds)
         {
-            if (_capacity - _animals.Count - animals.Count <= 0)
+            if (_capacity - _seeds.Count - seeds.Count <= 0)
             {
                 Console.WriteLine("That would exceed its capacity!");
             }
             else
             {
-                foreach (IGrazing animal in animals)
+                foreach (ISeedProducing seed in seeds)
                 {
-                    _animals.Add(animal);
+                    _seeds.Add(seed);
                 }
             }
         }
@@ -53,8 +53,8 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Grazing field {shortId} has {this._animals.Count} animals\n");
-            this._animals.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Plowed field {shortId} has {this._seeds.Count} seeds\n");
+            this._seeds.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
         }
