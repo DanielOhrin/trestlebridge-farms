@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
-using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions
 {
@@ -24,9 +24,21 @@ namespace Trestlebridge.Actions
                     Console.WriteLine();
                 }
 
-                for (int i = 0; i < farm.GrazingFields.Count; i++)
+                for (int i = 0; i < farm.PlowedFields.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Grazing Field ({farm.GrazingFields[i].AnimalAmount} animals)");
+                    Dictionary<string, int> animalCount = new Dictionary<string, int>();
+                    foreach (IGrazing a in farm.PlowedFields)
+                    {
+                        if (!animalCount.ContainsKey(a.GetType().Name))
+                        {
+                            animalCount.Add(a.GetType().Name, 1);
+                        }
+                        else
+                        {
+                            animalCount[a.GetType().Name]++;
+                        }
+                    }
+                    Console.WriteLine($"{i + 1}. Plowed Field ({String.Join(", ", animalCount.Select(x => x.Value + x.Key).ToList())})");
                 }
 
                 Console.WriteLine();

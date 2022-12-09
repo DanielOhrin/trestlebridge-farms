@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 
@@ -21,9 +23,22 @@ namespace Trestlebridge.Actions
                     Console.WriteLine();
                 }
 
+
                 for (int i = 0; i < farm.PlowedFields.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Plowed Field ({farm.PlowedFields[i].SeedAmount / 5} rows)");
+                    Dictionary<string, int> seedCount = new Dictionary<string, int>();
+                    foreach (ISeedProducing s in farm.PlowedFields)
+                    {
+                        if (!seedCount.ContainsKey(s.GetType().Name))
+                        {
+                            seedCount.Add(s.GetType().Name, 1);
+                        }
+                        else
+                        {
+                            seedCount[s.GetType().Name]++;
+                        }
+                    }
+                    Console.WriteLine($"{i + 1}. Plowed Field ({String.Join(", ", seedCount.Select(x => x.Value + x.Key).ToList())})");
                 }
 
                 Console.WriteLine();
